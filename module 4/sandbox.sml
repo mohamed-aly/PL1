@@ -116,6 +116,18 @@ fun multsgn (x,y) =
         _ => N 
     end
 
-val v = multsgn(3, ~3)
+(* Exceptions *)
+exception DivideByZero
+
+fun mydiv(x,y) = 
+    if y = 0 then raise DivideByZero else x div y
+
+fun maxList(xs, ex) = 
+    case xs of
+        [] => raise ex |
+        x::[] => x |
+        x::xs' => Int.max(x, maxList(xs', ex))
+
+val v = maxList([], List.Empty) handle List.Empty => 0 
 
 

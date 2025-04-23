@@ -128,4 +128,17 @@ fun maxList(xs, ex) =
         x::[] => x |
         x::xs' => Int.max(x, maxList(xs', ex))
 
-val v = maxList([], List.Empty) handle List.Empty => 0 
+val v = maxList([], List.Empty) handle List.Empty => 0
+
+(* Tail Recursion *)
+
+fun fact n = if n = 0 then 1 else n*fact(n-1)
+
+fun fact2 n = 
+    let
+      fun aux(n, acc) = if n=0 then acc else aux(n-1, n*acc)
+    in
+      aux(n,1)
+    end
+
+val f = fact2 3

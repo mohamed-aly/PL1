@@ -141,6 +141,29 @@ fun fact2 n =
       aux(n,1)
     end
 
-val f = fact2 3
+(* Accumulators for Tail Recursion *)
 
+fun sum_tail n = 
+    let
+        fun aux(n, acc) = 
+            if n=0 then acc else aux(n-1, n+acc)
+    in
+        aux(n,0)
+    end
 
+fun reverse(xs) = 
+    case xs of
+        [] => [] |
+        x::xs' => (reverse xs') @ [x] 
+
+fun reverse_tail(xs) = 
+    let
+        fun aux(xs, acc) = 
+            case xs of
+                [] => acc |
+                x::xs' => aux(xs', x::acc)
+    in
+        aux(xs, [])
+    end
+
+val s = reverse_tail([1,2,3,4])

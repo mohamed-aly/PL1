@@ -7,6 +7,15 @@ fun same_string(s1 : string, s2 : string) =
     s1 = s2
 
 (* put your solutions for problem 1 here *)
+fun all_except_option(name, names_list) = 
+   let
+     fun aux(strings, acc) = 
+         case strings of 
+            [] => NONE |
+            s'::strings' => if same_string(name, s') then SOME(acc@strings') else aux(strings', s'::acc)
+   in
+     aux(names_list, [])
+   end
 
 (* you may assume that Num is always used with values 2, 3, ..., 10
    though it will not really come up *)

@@ -25,6 +25,23 @@ fun get_substitutions1(substitutions, s) =
             NONE => get_substitutions1(xs, s) | SOME y => y @ get_substitutions1(xs, s)
          end
 
+fun get_substitutions2(substitutions, s) = 
+   let
+      fun aux(lists, acc) = 
+         case lists of 
+            [] => acc |
+            x::xs => 
+               let 
+                  val curr = all_except_option(s, x) 
+               in
+                  case curr of
+                     NONE => aux(xs, acc) |
+                     SOME y => aux(xs, acc@y)
+               end
+   in
+      aux(substitutions, [])
+   end
+
 (* you may assume that Num is always used with values 2, 3, ..., 10
    though it will not really come up *)
 datatype suit = Clubs | Diamonds | Hearts | Spades

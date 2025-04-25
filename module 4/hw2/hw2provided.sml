@@ -17,6 +17,14 @@ fun all_except_option(name, names_list) =
      aux(names_list, [])
    end
 
+fun get_substitutions1(substitutions, s) = 
+   case substitutions of
+      [] => [] |
+      x::xs => let val curr = all_except_option(s, x) in
+         case curr of
+            NONE => get_substitutions1(xs, s) | SOME y => y @ get_substitutions1(xs, s)
+         end
+
 (* you may assume that Num is always used with values 2, 3, ..., 10
    though it will not really come up *)
 datatype suit = Clubs | Diamonds | Hearts | Spades

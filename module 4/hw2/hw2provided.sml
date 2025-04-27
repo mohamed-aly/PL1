@@ -72,3 +72,25 @@ fun card_color(c) =
       (Spades, _) => Black |
       (Clubs, _) => Black |
       _ => Red
+
+
+fun card_value(c) = 
+   case c of
+      (_, Num n) => n |
+      (_, Ace) => 11 |
+      _ => 10
+
+fun remove_card(cs, c, e) =
+   let
+      fun aux(updated_cs, acc) = 
+         case updated_cs of
+            [] => raise e |
+            c'::cs' => if c' = c then acc@cs' else aux(cs', c'::acc)
+   in
+      aux(cs, [])
+   end
+
+fun remove_card2(cs, c, e) =
+   case cs of
+      [] => raise e |
+      c'::cs' => if c = c' then cs' else remove_card2(cs', c, e)

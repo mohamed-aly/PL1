@@ -93,4 +93,4 @@ fun remove_card(cs, c, e) =
 fun remove_card2(cs, c, e) =
    case cs of
       [] => raise e |
-      c'::cs' => if c = c' then cs' else remove_card2(cs', c, e)
+      c'::cs' => if c = c' then cs' else c'::remove_card2(cs', c, e)

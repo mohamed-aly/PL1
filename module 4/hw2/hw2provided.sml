@@ -94,3 +94,9 @@ fun remove_card2(cs, c, e) =
    case cs of
       [] => raise e |
       c'::cs' => if c = c' then cs' else c'::remove_card2(cs', c, e)
+
+fun all_same_color(cs) = 
+   case cs of
+      [] => true |
+      x::[] => true |
+      x::y::rest => card_color(x) = card_color(y) andalso all_same_color(rest)

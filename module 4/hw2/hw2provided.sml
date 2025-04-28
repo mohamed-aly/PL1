@@ -110,3 +110,11 @@ fun sum_cards(cs) =
    in
       aux(cs, 0)
    end
+
+fun score(cs, goal) = 
+   let
+      val sum = sum_cards(cs)
+      val preliminary_score = if sum > goal then (sum - goal) * 3 else goal - sum
+   in
+      if all_same_color(cs) then preliminary_score div 2 else preliminary_score
+   end

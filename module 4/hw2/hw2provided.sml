@@ -100,3 +100,13 @@ fun all_same_color(cs) =
       [] => true |
       x::[] => true |
       x::y::rest => card_color(x) = card_color(y) andalso all_same_color(rest)
+
+fun sum_cards(cs) =
+   let
+      fun aux(updated_cs, acc) = 
+         case updated_cs of
+            [] => acc |
+            x::xs => aux(xs, card_value(x) + acc)
+   in
+      aux(cs, 0)
+   end

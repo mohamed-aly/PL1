@@ -81,19 +81,9 @@ fun card_value(c) =
       _ => 10
 
 fun remove_card(cs, c, e) =
-   let
-      fun aux(updated_cs, acc) = 
-         case updated_cs of
-            [] => raise e |
-            c'::cs' => if c' = c then acc@cs' else aux(cs', c'::acc)
-   in
-      aux(cs, [])
-   end
-
-fun remove_card2(cs, c, e) =
    case cs of
       [] => raise e |
-      c'::cs' => if c = c' then cs' else c'::remove_card2(cs', c, e)
+      c'::cs' => if c = c' then cs' else c'::remove_card(cs', c, e)
 
 fun all_same_color(cs) = 
    case cs of
@@ -117,4 +107,26 @@ fun score(cs, goal) =
       val preliminary_score = if sum > goal then (sum - goal) * 3 else goal - sum
    in
       if all_same_color(cs) then preliminary_score div 2 else preliminary_score
+   end
+
+fun officiate(cards_list, moves_list, goal) = 
+   let
+      fun aux(updated_cards_list, held_cards, moves) = 
+         case moves of
+            [] => score(held_cards, goal) |
+            m::ms => 
+               case m of
+                  Discard c => aux(updated_cards_list, remove_card(held_cards, c, IllegalMove), ms) |
+                  Draw => 
+                     case updated_cards_list of
+                        [] => score(held_cards, goal) |
+                        c'::cs' => 
+                           let
+                              val updated_held_cards = c'::held_cards
+                              val score = score(updated_held_cards, goal)
+                           in
+                              if score > goal then score else aux(cs', updated_held_cards, ms) 
+                           end
+   in
+      aux(cards_list, [], moves_list)
    end

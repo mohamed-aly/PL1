@@ -130,3 +130,57 @@ fun officiate(cards_list, moves_list, goal) =
    in
       aux(cards_list, [], moves_list)
    end
+
+
+(*Challenge Problems*)
+fun card_value_challenge(c) = 
+   case c of
+      (_, Num n) => n |
+      (_, Ace) => 1 |
+      _ => 10
+
+fun sum_cards_challenge(cs) =
+   let
+      fun aux(updated_cs, acc) = 
+         case updated_cs of
+            [] => acc |
+            x::xs => aux(xs, card_value_challenge(x) + acc)
+   in
+      aux(cs, 0)
+   end
+
+fun score_challenge(cs, goal) = 
+   let
+      val sum1 = sum_cards(cs)
+      val preliminary_score1 = if sum1 > goal then (sum1 - goal) * 3 else goal - sum1
+
+      val sum2 = sum_cards_challenge(cs)
+      val preliminary_score2 = if sum2 > goal then (sum2 - goal) * 3 else goal - sum2
+
+      val final_preliminary_score = Int.min(preliminary_score1, preliminary_score2)
+   in
+      if all_same_color(cs) then final_preliminary_score div 2 else final_preliminary_score
+   end
+
+fun officiate_challenge(cards_list, moves_list, goal) = 
+   let
+      fun aux(updated_cards_list, held_cards, moves) = 
+         case moves of
+            [] => score_challenge(held_cards, goal) |
+            m::ms => 
+               case m of
+                  Discard c => aux(updated_cards_list, remove_card(held_cards, c, IllegalMove), ms) |
+                  Draw => 
+                     case updated_cards_list of
+                        [] => score_challenge(held_cards, goal) |
+                        c'::cs' => 
+                           let
+                              val updated_held_cards = c'::held_cards
+                              val score = score_challenge(updated_cards_list, goal)
+                           in
+                              if score > goal then score else aux(cs', updated_held_cards, ms) 
+                           end
+   in
+      aux(cards_list, [], moves_list)
+   end
+

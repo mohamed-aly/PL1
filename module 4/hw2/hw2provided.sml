@@ -184,3 +184,43 @@ fun officiate_challenge(cards_list, moves_list, goal) =
       aux(cards_list, [], moves_list)
    end
 
+fun careful_player(card_list: card list, goal: int): move list =
+  let
+    fun play(cards, held) = 
+      case cards of 
+         [] => [] |
+         c::cs =>
+          let
+            val current_sum = sum_cards(held)
+            val value_c = card_value c
+            val can_draw = current_sum + value_c <= goal
+            val should_draw = goal > current_sum + 10
+            val draw_then_score = score(held @ [c], goal)
+
+            fun try_discard (helds) = 
+               case helds of
+                  [] => NONE |
+                  (h::hs) =>
+                  let
+                    val new_held = remove_card(held, h, IllegalMove) @ [c]
+                  in
+                    if score(new_held, goal) = 0 then
+                      SOME (Discard h :: Draw :: [])
+                    else
+                      try_discard hs
+                  end
+          in
+            if current_sum = 0 then []
+            (* Rule 4: Discard-then-draw to get to score 0 *)
+            else case try_discard held of
+              SOME moves => moves @ play(cs, remove_card(held, hd held, IllegalMove) @ [c])
+            (* Rule 2: draw if goal > current sum + 10 *)
+              | NONE =>
+                  if should_draw andalso can_draw then
+                    Draw :: play(cs, held @ [c])
+                  else
+                    [] (* Stop playing otherwise *)
+          end
+  in
+    play(card_list, [])
+  end

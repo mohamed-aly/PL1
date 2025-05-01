@@ -211,15 +211,13 @@ fun careful_player(card_list: card list, goal: int): move list =
                   end
           in
             if current_sum = 0 then []
-            (* Rule 4: Discard-then-draw to get to score 0 *)
             else case try_discard held of
               SOME moves => moves @ play(cs, remove_card(held, hd held, IllegalMove) @ [c])
-            (* Rule 2: draw if goal > current sum + 10 *)
               | NONE =>
                   if should_draw andalso can_draw then
                     Draw :: play(cs, held @ [c])
                   else
-                    [] (* Stop playing otherwise *)
+                    [] 
           end
   in
     play(card_list, [])

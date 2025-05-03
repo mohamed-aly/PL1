@@ -195,7 +195,6 @@ fun careful_player(card_list: card list, goal: int): move list =
             val value_c = card_value c
             val can_draw = current_sum + value_c <= goal
             val should_draw = goal > current_sum + 10
-            val draw_then_score = score(held @ [c], goal)
 
             fun try_discard (helds) = 
                case helds of
@@ -211,15 +210,14 @@ fun careful_player(card_list: card list, goal: int): move list =
                   end
           in
             if current_sum = 0 then []
-            (* Rule 4: Discard-then-draw to get to score 0 *)
-            else case try_discard held of
-              SOME moves => moves @ play(cs, remove_card(held, hd held, IllegalMove) @ [c])
-            (* Rule 2: draw if goal > current sum + 10 *)
-              | NONE =>
+            else 
+               case try_discard held of
+                  SOME moves => moves @ play(cs, remove_card(held, hd held, IllegalMove) @ [c])
+               | NONE =>
                   if should_draw andalso can_draw then
                     Draw :: play(cs, held @ [c])
                   else
-                    [] (* Stop playing otherwise *)
+                    [] 
           end
   in
     play(card_list, [])

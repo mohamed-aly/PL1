@@ -8,5 +8,15 @@ fun pass_or_fail {grade,id} =
         SOME i => if i >=75 then pass else fail |
         _ => fail
 
+fun has_passed fg = 
+    pass_or_fail fg = pass
 
-val s = pass_or_fail {grade=(SOME 10), id=1}
+fun number_passed fgs = 
+    case fgs of
+        [] => 0 |
+        fg::rest => let val curr = if (has_passed fg) then 1 else 0 in 
+                        curr + number_passed rest
+                    end
+
+
+val s = number_passed [{grade=(SOME 75), id=1}, {grade=(SOME 80), id=1}]

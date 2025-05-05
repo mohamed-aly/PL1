@@ -18,5 +18,10 @@ fun number_passed fgs =
                         curr + number_passed rest
                     end
 
+fun number_misgraded(labels) =
+    case labels of
+        [] => 0 |
+        (pf, grade)::ls => if (pass_or_fail grade) = pf then 0 + number_misgraded (ls) else 1 + number_misgraded (ls) 
 
-val s = number_passed [{grade=(SOME 75), id=1}, {grade=(SOME 80), id=1}]
+
+val s = number_misgraded [(fail, {grade=(SOME 75), id=1}), (pass, {grade=(SOME 80), id=1})]

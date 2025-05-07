@@ -24,4 +24,21 @@ fun number_misgraded(labels) =
         (pf, grade)::ls => if (pass_or_fail grade) = pf then 0 + number_misgraded (ls) else 1 + number_misgraded (ls) 
 
 
-val s = number_misgraded [(fail, {grade=(SOME 75), id=1}), (pass, {grade=(SOME 80), id=1})]
+datatype 'a tree = leaf 
+                 | node of { value : 'a, left : 'a tree, right : 'a tree }
+datatype flag = leave_me_alone | prune_me
+
+fun tree_height(tree) = 
+    case tree of
+        leaf => 0 |
+        node {value, left, right} =>
+            let
+                val left_height = tree_height left
+                val right_height = tree_height right
+            in
+                if left_height > right_height then left_height + 1 else right_height + 1
+            end
+
+
+
+val s = tree_height (node {value=0, left=leaf, right=leaf})

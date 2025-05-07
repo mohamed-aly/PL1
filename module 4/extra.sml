@@ -50,6 +50,25 @@ fun gardener(flag_tree) =
         leaf => flag_tree |
         node {value, left, right} => if value = prune_me then leaf else node {value=value, left=gardener left, right= gardener right}
 
-val s = gardener (node {value=leave_me_alone, 
-                        left=node {value=prune_me, left=node {value=leave_me_alone, left=leaf, right=leaf}, right=leaf},
-                        right=leaf})
+
+(* Options *)
+
+datatype 'a option = NONE | SOME of 'a
+exception Option
+
+fun getOpt(opt, a) = 
+    case opt of
+        NONE => a |
+        SOME v => v
+
+fun isSome opt = 
+    case opt of
+        SOME _ => true |
+        _ => false
+
+fun valOf opt = 
+    case opt of 
+        SOME v => v |
+        _ => raise Option
+
+val s = valOf(NONE)

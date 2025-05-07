@@ -39,6 +39,9 @@ fun tree_height(tree) =
                 if left_height > right_height then left_height + 1 else right_height + 1
             end
 
+fun sum_tree(tree) = 
+    case tree of
+        leaf => 0 |
+        node {value, left, right} => value + sum_tree left + sum_tree right
 
-
-val s = tree_height (node {value=0, left=leaf, right=leaf})
+val s = sum_tree (node {value=3, left=leaf, right=node {value=10, left=leaf, right=leaf}})

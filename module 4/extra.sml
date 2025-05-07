@@ -44,4 +44,12 @@ fun sum_tree(tree) =
         leaf => 0 |
         node {value, left, right} => value + sum_tree left + sum_tree right
 
-val s = sum_tree (node {value=3, left=leaf, right=node {value=10, left=leaf, right=leaf}})
+
+fun gardener(flag_tree) =
+    case flag_tree of 
+        leaf => flag_tree |
+        node {value, left, right} => if value = prune_me then leaf else node {value=value, left=gardener left, right= gardener right}
+
+val s = gardener (node {value=leave_me_alone, 
+                        left=node {value=prune_me, left=node {value=leave_me_alone, left=leaf, right=leaf}, right=leaf},
+                        right=leaf})

@@ -96,6 +96,13 @@ fun take (l, i) =
         ([], n) => raise Subscript |
         (x::xs, n) => x::take(xs, n-1)
 
+fun drop (l, i) = 
+    if i < 0
+    then raise Subscript
+    else 
+    case (l, i) of
+        ([], _) => raise Subscript |
+        (xs, 0) => xs |
+        (_::xs, n) => drop(xs, n-1)
 
-
-val s = take([1,2,3,4], 5)
+val s = drop([1,2,3,4], 2)

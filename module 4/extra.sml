@@ -81,4 +81,11 @@ fun last l =
         x::[] => x |
         x::xs => last xs
 
-val s = last []
+
+fun length l =
+    case l of
+        [] => 0 |
+        x::xs => 1 + length xs
+
+
+val s = length [1,2,3,4]

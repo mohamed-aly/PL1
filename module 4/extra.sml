@@ -71,4 +71,14 @@ fun valOf opt =
         SOME v => v |
         _ => raise Option
 
-val s = valOf(NONE)
+
+
+exception Empty
+
+fun last l =
+    case l of
+        [] => raise Empty |
+        x::[] => x |
+        x::xs => last xs
+
+val s = last []

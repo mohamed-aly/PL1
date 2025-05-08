@@ -87,5 +87,15 @@ fun length l =
         [] => 0 |
         x::xs => 1 + length xs
 
+fun take (l, i) = 
+    if i < 0
+    then raise Subscript
+    else 
+    case (l, i) of
+        (_, 0) => [] |
+        ([], n) => raise Subscript |
+        (x::xs, n) => x::take(xs, n-1)
 
-val s = length [1,2,3,4]
+
+
+val s = take([1,2,3,4], 5)

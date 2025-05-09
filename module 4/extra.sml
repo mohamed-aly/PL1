@@ -105,4 +105,9 @@ fun drop (l, i) =
         (xs, 0) => xs |
         (_::xs, n) => drop(xs, n-1)
 
-val s = drop([1,2,3,4], 2)
+fun concat(ls) = 
+    case ls of
+        [] => [] |
+        l::rest => l @ concat rest
+
+val s = concat([[1,2,3,4], [5], [6,7]])

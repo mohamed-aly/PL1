@@ -126,5 +126,10 @@ fun pred(n) =
         ZERO => raise Negative |
         SUCC v => v
 
-val s = pred (SUCC(SUCC(ZERO)))
+fun nat_to_int(n) =
+    case n of
+        ZERO => 0 |
+        SUCC v => 1 + nat_to_int(v)
+
+val s = nat_to_int (SUCC(SUCC(ZERO)))
 

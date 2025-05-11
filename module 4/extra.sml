@@ -141,5 +141,24 @@ fun add(x, y) =
         ZERO => x |
         SUCC v => add(SUCC x, v)
 
-val s = add (SUCC(ZERO), SUCC(SUCC(ZERO)))
+fun sub(x, y) =
+    case y of
+        ZERO => x |
+        SUCC v => sub(pred x, v)
+
+fun mult(x, y) =
+    let
+        fun aux(n1, n2, acc) = 
+            case (n1, n2) of
+                (ZERO, ZERO) => ZERO |
+                (ZERO, SUCC _) => ZERO |
+                (SUCC _, ZERO) => acc |
+                (SUCC _, SUCC v) => aux(n1, v, add(acc, n1))
+
+    in
+        aux(x,y,ZERO)
+    end
+
+
+val s = nat_to_int(mult (int_to_nat(2), int_to_nat(0)))
 

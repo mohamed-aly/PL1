@@ -136,5 +136,10 @@ fun int_to_nat(n) =
     then ZERO
     else SUCC(int_to_nat(n-1))
 
-val s = int_to_nat (4)
+fun add(x, y) = 
+    case y of
+        ZERO => x |
+        SUCC v => add(SUCC x, v)
+
+val s = add (SUCC(ZERO), SUCC(SUCC(ZERO)))
 

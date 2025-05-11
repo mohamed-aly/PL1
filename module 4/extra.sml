@@ -119,5 +119,12 @@ fun is_positive(n) =
         ZERO => false |
         SUCC _ => true
 
-val s = is_positive (SUCC(ZERO))
+exception Negative
+
+fun pred(n) = 
+    case n of
+        ZERO => raise Negative |
+        SUCC v => v
+
+val s = pred (SUCC(SUCC(ZERO)))
 

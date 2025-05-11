@@ -131,5 +131,10 @@ fun nat_to_int(n) =
         ZERO => 0 |
         SUCC v => 1 + nat_to_int(v)
 
-val s = nat_to_int (SUCC(SUCC(ZERO)))
+fun int_to_nat(n) =
+    if n = 0
+    then ZERO
+    else SUCC(int_to_nat(n-1))
+
+val s = int_to_nat (4)
 

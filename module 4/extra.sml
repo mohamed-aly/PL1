@@ -159,6 +159,13 @@ fun mult(x, y) =
         aux(x,y,ZERO)
     end
 
+fun less_than(x, y) =
+    case (x, y) of
+        (ZERO, ZERO) => false |
+        (SUCC _, ZERO) => false |
+        (ZERO, SUCC _) => true |
+        (SUCC v1, SUCC v2) => less_than(v1, v2)
 
-val s = nat_to_int(mult (int_to_nat(2), int_to_nat(0)))
+
+val s = less_than (int_to_nat(2), int_to_nat(3))
 

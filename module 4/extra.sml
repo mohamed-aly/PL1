@@ -71,7 +71,7 @@ fun valOf opt =
         SOME v => v |
         _ => raise Option
 
-
+(* list *)
 
 exception Empty
 
@@ -110,4 +110,14 @@ fun concat(ls) =
         [] => [] |
         l::rest => l @ concat rest
 
-val s = concat([[1,2,3,4], [5], [6,7]])
+(* part 4 *)
+
+datatype nat = ZERO | SUCC of nat
+
+fun is_positive(n) =
+    case n of
+        ZERO => false |
+        SUCC _ => true
+
+val s = is_positive (SUCC(ZERO))
+

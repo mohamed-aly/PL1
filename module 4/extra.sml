@@ -169,3 +169,11 @@ fun less_than(x, y) =
 
 val s = less_than (int_to_nat(2), int_to_nat(3))
 
+(* 17 - 19 *)
+datatype intSet = 
+  Elems of int list (*list of integers, possibly with duplicates to be ignored*)
+| Range of { from : int, to : int }  (* integers from one number to another *)
+| Union of intSet * intSet (* union of the two sets *)
+| Intersection of intSet * intSet (* intersection of the two sets *)
+
+

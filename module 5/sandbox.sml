@@ -15,8 +15,18 @@ fun triple_n_times (x, n) = n_times(fn x => x * 3, x, n)
 (* Unnecessary Function Wrapping *)
 fun nth_tail (xs, n) = n_times(tl, xs, n)
 
-val s = nth_tail([1,2,3,4], 1)
-
 val rev = List.rev
 
-val z = rev [1,2,3,4]
+(* Map and Filter *)
+fun map(f, xs) =
+    case xs of
+        [] => [] |
+        x::rest => (f x)::map(f, rest)
+
+val s = map(hd, [[1,2], [3,4], [5,6]])
+val s = map(incr, [1,2,3,4,5])
+
+fun filter(f, xs) =
+    case xs of
+        [] => [] |
+        x::rest => if f x = true then x::filter(f, rest) else filter(f, rest)

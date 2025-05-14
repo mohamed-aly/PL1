@@ -29,4 +29,7 @@ val s = map(incr, [1,2,3,4,5])
 fun filter(f, xs) =
     case xs of
         [] => [] |
-        x::rest => if f x = true then x::filter(f, rest) else filter(f, rest)
+        x::rest => if f x then x::filter(f, rest) else filter(f, rest)
+
+fun is_even n = (n mod 2 = 0)
+val all_even = filter(is_even, [1,2,3,4,5,6])

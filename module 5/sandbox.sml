@@ -33,3 +33,17 @@ fun filter(f, xs) =
 
 fun is_even n = (n mod 2 = 0)
 val all_even = filter(is_even, [1,2,3,4,5,6])
+
+(* Generalizing Prior Topics *)
+
+(* Lexical Scope *)
+val x = 1
+
+fun f y = y + x
+
+val x = 2
+
+val y = 3
+
+val z = f (x + y)
+

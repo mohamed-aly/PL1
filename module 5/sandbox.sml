@@ -61,3 +61,10 @@ val s = f 4
 
 val g = s 6
 
+(* Why Lexical Scope *)
+
+fun greaterThanX x = fn y => y > xs
+
+fun nonNegatives xs = filter(greaterThanX -1, xs)
+
+fun allGreater(xs, n) = filter(fn x => x > n, xs)

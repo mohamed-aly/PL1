@@ -79,3 +79,20 @@ fun allShorterThan2(xs, s) =
     in
         filter(fn x => String.size x < i, xs)
     end
+
+(* Fold and More Closures *)
+
+fun fold(f, xs, acc) = 
+    case xs of
+        [] => acc |
+        x::rest => fold(f, rest, f(acc, x))
+
+fun f1 xs = fold(fn (x,y) => x+y, xs, 0)
+
+fun f2 xs = fold(fn (x, y) => x andalso y >= 0, xs, true)
+
+fun f3 (xs, lo, hi) = fold(fn (x, y) => x + (if y >= lo andalso y <= hi then 1 else 0), xs, 0)
+
+val s = f1 [1,2,3,4]
+
+val x = f2 [~1,2,3,4]

@@ -63,8 +63,19 @@ val g = s 6
 
 (* Why Lexical Scope *)
 
-fun greaterThanX x = fn y => y > xs
+fun greaterThanX xs = fn y => y > xs
 
-fun nonNegatives xs = filter(greaterThanX -1, xs)
+fun nonNegatives xs = filter(greaterThanX ~1, xs)
 
 fun allGreater(xs, n) = filter(fn x => x > n, xs)
+
+(* Closures and Recomputation *)
+
+fun allShorterThan1(xs, s) = filter(fn x => String.size x < String.size s, xs)
+
+fun allShorterThan2(xs, s) = 
+    let
+        val i = String.size s
+    in
+        filter(fn x => String.size x < i, xs)
+    end

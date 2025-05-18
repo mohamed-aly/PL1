@@ -96,3 +96,21 @@ fun f3 (xs, lo, hi) = fold(fn (x, y) => x + (if y >= lo andalso y <= hi then 1 e
 val s = f1 [1,2,3,4]
 
 val x = f2 [~1,2,3,4]
+
+(* Closure Idiom: Combining Functions *)
+
+fun sqrt_of_abs i = Math.sqrt(Real.fromInt(abs i))
+
+fun sqrt_of_abs2 i = (Math.sqrt o Real.fromInt o abs) i
+
+val sqrt_of_abs3 = Math.sqrt o Real.fromInt o abs
+
+val s = sqrt_of_abs3 ~16
+
+infix |>
+
+fun x |> f = f x
+
+fun sqrt_of_abs4 i = i |> abs |> Real.fromInt |> Math.sqrt
+
+val s = sqrt_of_abs4 ~16

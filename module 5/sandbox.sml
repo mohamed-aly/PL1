@@ -114,3 +114,13 @@ fun x |> f = f x
 fun sqrt_of_abs4 i = i |> abs |> Real.fromInt |> Math.sqrt
 
 val s = sqrt_of_abs4 ~16
+
+(* Currying *)
+
+val sorted = fn x => fn y => fn z => z >= y andalso y >= x
+
+val s = (((sorted 7) 9) 11)
+
+fun sorted_nicer x y z = z >= y andalso y >= x
+
+val s = sorted_nicer 5 6 7

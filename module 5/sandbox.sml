@@ -124,3 +124,15 @@ val s = (((sorted 7) 9) 11)
 fun sorted_nicer x y z = z >= y andalso y >= x
 
 val s = sorted_nicer 5 6 7
+
+(* Partial Application *)
+
+val is_nonnegative = sorted_nicer 0 0
+
+val s = is_nonnegative ~1
+
+fun range i j = if i > j then [] else i :: range (i + 1) j
+
+val countup = range 1
+
+val s =  countup 10

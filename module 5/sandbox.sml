@@ -136,3 +136,16 @@ fun range i j = if i > j then [] else i :: range (i + 1) j
 val countup = range 1
 
 val s =  countup 10
+
+(* Currying Wrapup *)
+
+fun range2 (i, j) = if i > j then [] else i :: range2(i+1, j)
+
+fun curry f x y = f (x,y)
+
+fun uncurry f(x,y) = f x y
+
+val countup2 = curry range2 1
+
+val s = countup2 7
+

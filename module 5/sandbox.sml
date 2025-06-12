@@ -149,3 +149,12 @@ val countup2 = curry range2 1
 
 val s = countup2 7
 
+(* Mutable References *)
+
+val x = ref 42
+val y = ref 42
+val z = x
+val _ = x := 43
+
+
+

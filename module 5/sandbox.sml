@@ -156,5 +156,32 @@ val y = ref 42
 val z = x
 val _ = x := 43
 
+(* Optional: Closure Idioms Without Closures *)
+
+datatype 'a mylist = Cons of 'a * ('a mylist) | Empty
+
+fun map f xs = case xs of
+    Empty => Empty |
+    Cons(x, rest) => Cons(f x, map f rest)
+
+fun filter f xs = case xs of
+    Empty => Empty |
+    Cons(x, rest) => if f x then Cons(x, filter f rest) else filter f rest
+
+fun length xs = 
+    case xs of
+        Empty => 0 |
+        Cons(x, rest) => 1 + length rest
+
+val doubleAll = map (fn x => x * 2)
+
+fun countNs (xs, n: int) = length( filter (fn x => x=n) xs)
+
+val s = Cons(3, Cons(4, Cons(5, Empty)))
+
+val x = doubleAll s
+
+val z = countNs(s, 3)
+
 
 

@@ -44,8 +44,12 @@ val longest_string2 = List.foldl (fn (x, y) => if String.size(x) >= String.size(
 
 fun longest_string_helper cmp = List.foldl (fn (x, y) => if cmp (String.size x, String.size y) then x else y) ""
 
-val longest_string3 = longest_string_helper (op >)
+val longest_string3 = longest_string_helper (fn (x, y) => if x > y then true else false)
 
-val longest_string4 = longest_string_helper (op >=)
+val longest_string4 = longest_string_helper (fn (x, y) => if x >= y then true else false)
+
+val longest_capitalized = longest_string1 o only_capitals
+
+val rev_string = String.implode o List.rev o String.explode
 
 

@@ -14,17 +14,17 @@ datatype valu = Const of int
 	      | Tuple of valu list
 	      | Constructor of string * valu
 
-fun g f1 f2 p =
-    let 
-	val r = g f1 f2 
-    in
-	case p of
-	    Wildcard          => f1 ()
-	  | Variable x        => f2 x
-	  | TupleP ps         => List.foldl (fn (p,i) => (r p) + i) 0 ps
-	  | ConstructorP(_,p) => r p
-	  | _                 => 0
-    end
+fun g f1 f2 p = 
+	let
+		val r = g f1 f2
+	in
+		case p of
+			Wildcard => f1 () |
+			Variable x => f2 x |
+		 	TupleP ps => List.foldl (fn (p, acc) => (r p) + acc) 0 ps |
+			ConstructorP (_, p) => r p |
+			_ => 0
+	end
 
 (**** for the challenge problem only ****)
 
@@ -52,4 +52,22 @@ val longest_capitalized = longest_string1 o only_capitals
 
 val rev_string = String.implode o List.rev o String.explode
 
+fun first_answer f l = 
+	case l of 
+		[] => raise NoAnswer |
+		x::xs => let val answer = f(x) in
+		case answer of NONE => first_answer f xs | SOME(v) => v end
 
+fun all_answers f l =
+	let
+		fun aux(l', acc) = 
+			case l' of 
+				[] => SOME acc |
+				x::xs => let val answer = f(x) in
+					case answer of NONE => NONE | SOME v => aux(xs, acc@v) end
+
+	in
+		aux(l, [])
+	end
+
+fun count_wildcards cs = g (fn () => 1) (fn _ => 0) cs

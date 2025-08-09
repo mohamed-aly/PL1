@@ -111,9 +111,4 @@ fun match(v, p) =
 		(Constructor (s2, v'), ConstructorP (s1, p')) => if s1=s2 then match(v', p') else NONE |
 		_ => NONE
 
-
-
-
-	
-
-
+fun first_match v pl = SOME(first_answer (fn p => match(v, p)) pl) handle NoAnswer => NONE

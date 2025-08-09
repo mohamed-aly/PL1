@@ -87,5 +87,5 @@ val test11_17 = match (Constructor("Just", Tuple [Const(1), Unit]),
                         ConstructorP("Just", TupleP [Wildcard, UnitP]))
                    = SOME []
 
-(* val test12 = first_match Unit [UnitP] = SOME [] *)
+val test12 = first_match Unit [UnitP] = SOME []
 

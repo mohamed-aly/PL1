@@ -14,17 +14,6 @@ datatype valu = Const of int
 	      | Tuple of valu list
 	      | Constructor of string * valu
 
-fun g f1 f2 p = 
-	let
-		val r = g f1 f2
-	in
-		case p of
-			Wildcard => f1 () |
-			Variable x => f2 x |
-		 	TupleP ps => List.foldl (fn (p, acc) => (r p) + acc) 0 ps |
-			ConstructorP (_, p) => r p |
-			_ => 0
-	end
 
 (**** for the challenge problem only ****)
 
@@ -70,4 +59,61 @@ fun all_answers f l =
 		aux(l, [])
 	end
 
-fun count_wildcards cs = g (fn () => 1) (fn _ => 0) cs
+
+fun g f1 f2 p = 
+	let
+		val r = g f1 f2
+	in
+		case p of
+			Wildcard => f1 () |
+			Variable x => f2 x |
+		 	TupleP ps => List.foldl (fn (p, acc) => (r p) + acc) 0 ps |
+			ConstructorP (_, p) => r p |
+			_ => 0
+	end
+
+
+val count_wildcards = g (fn () => 1) (fn _ => 0)
+
+val count_wild_and_variable_lengths = g (fn () => 1) (fn x => String.size x)
+
+fun count_some_var (s, p) = g (fn () => 0) (fn x => if x = s then 1 else 0) p
+
+fun check_pat p = 
+	let
+		fun extract_vars p =
+			case p of
+				Variable x => [x] |
+				TupleP ps => List.foldl (fn (p, acc) => extract_vars(p) @ acc) [] ps |
+				ConstructorP (_, p) => extract_vars p |
+				_ => []
+
+		fun repeats sl =
+			case sl of
+				[] => true |
+				x::xs => List.exists (fn a => if a = x then true else repeats xs) sl 
+	in
+		repeats(extract_vars(p))
+	end
+
+fun match(v, p) = 
+	case (v, p) of
+		(_, Wildcard) => SOME[] |
+		(_, Variable s) => SOME[(s, v)] |
+		(Unit, UnitP) => SOME[] |
+		(Const x, ConstP n) => if x = n then SOME[] else NONE |
+		(Tuple vl, TupleP pl) => 
+			((let 
+				val compined = ListPair.zipEq(vl, pl) 
+			in 
+				all_answers match compined
+			end) handle e => NONE) |
+		(Constructor (s2, v'), ConstructorP (s1, p')) => if s1=s2 then match(v', p') else NONE |
+		_ => NONE
+
+
+
+
+	
+
+

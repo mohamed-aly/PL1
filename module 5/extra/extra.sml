@@ -11,3 +11,12 @@ val h = compose_opt halfIfEven safeSqrt
 
 val s = h 16
 
+fun do_until f p x = 
+    let
+        val result = f x
+    in
+        if not (p(result)) then do_until f p result else result
+    end
+
+val s = do_until (fn x => x div 2) (fn x => x mod 2 <> 1) 99
+

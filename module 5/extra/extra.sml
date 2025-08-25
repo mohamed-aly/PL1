@@ -35,3 +35,7 @@ val s = factorial 5
 fun fixed_point f x = do_until f (fn x => (f x) <> x) x
 
 
+(* 5 *)
+fun map2 f (x,y) = ((f x), (f y))
+
+

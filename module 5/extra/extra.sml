@@ -1,3 +1,4 @@
+(* 1 *)
 fun compose_opt f g x = 
     case g x of 
         NONE => NONE |
@@ -11,12 +12,21 @@ val h = compose_opt halfIfEven safeSqrt
 
 val s = h 16
 
+(* 2 *)
 fun do_until f p x = 
+    if p x
+    then do_until f p (f x)
+    else x
+
+val s = do_until (fn x => x div 2) (fn x => x mod 2 <> 1) 100
+
+(* 3 *)
+fun factorial n = 
     let
-        val result = f x
+      val (_, result) = do_until (fn (i, acc) => (i-1, acc * i)) (fn (i, _) => i <> 1) (n, 1)
     in
-        if not (p(result)) then do_until f p result else result
+      result
     end
+    
 
-val s = do_until (fn x => x div 2) (fn x => x mod 2 <> 1) 99
-
+val s = factorial 5

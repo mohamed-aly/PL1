@@ -38,4 +38,13 @@ fun fixed_point f x = do_until f (fn x => (f x) <> x) x
 (* 5 *)
 fun map2 f (x,y) = ((f x), (f y))
 
+(* 6 *)
+(* val app_all f = List.foldl (fn (x, acc) => acc@(f x)) [] *)
+
+fun app_all f g x = List.foldl (fn (x, acc) => acc@(f x)) [] (g x)
+
+fun g x = [x, x*2, x*3]
+
+val s = app_all g g 1
+
 

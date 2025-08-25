@@ -47,4 +47,16 @@ fun g x = [x, x*2, x*3]
 
 val s = app_all g g 1
 
+(* 7 *)
+fun foldl f init xs = 
+    case xs of
+        [] => init |
+        x::rest => foldl f (f (x, init)) rest
 
+
+fun foldr f init xs =
+    case xs of
+        [] => init |
+        x::rest => f (x, foldr f init rest)
+
+val s = foldr (fn(x, acc) => (x+2)::acc) [] [1,2,3]

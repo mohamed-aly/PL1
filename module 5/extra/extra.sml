@@ -32,6 +32,6 @@ fun factorial n =
 val s = factorial 5
 
 (* 4 *)
-fun fixed_point f x = do_until f (fn x => (f x) = x) x
+fun fixed_point f x = do_until f (fn x => (f x) <> x) x
 
 

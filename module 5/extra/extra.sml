@@ -66,4 +66,12 @@ fun partition p xs = foldr (fn (x, (first, second)) => if p x then (x::first, se
 
 val s = partition (fn x => x > 4) [1,2,3,4,5,6,7]
 
+(* 9 *)
+fun unfold f x =
+    case f x of
+        NONE => [] |
+        SOME (n, m) => n::unfold f m
+
+val s = unfold (fn n => if n < 0 then NONE else SOME(n, n-1)) 9
+
 

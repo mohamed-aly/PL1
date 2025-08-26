@@ -60,3 +60,10 @@ fun foldr f init xs =
         x::rest => f (x, foldr f init rest)
 
 val s = foldr (fn(x, acc) => (x+2)::acc) [] [1,2,3]
+
+(* 8 *)
+fun partition p xs = foldr (fn (x, (first, second)) => if p x then (x::first, second) else (first, x::second)) ([], []) xs
+
+val s = partition (fn x => x > 4) [1,2,3,4,5,6,7]
+
+

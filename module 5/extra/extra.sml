@@ -74,4 +74,9 @@ fun unfold f x =
 
 val s = unfold (fn n => if n < 0 then NONE else SOME(n, n-1)) 9
 
+(* 10 *)
+fun fact2 x = List.foldl (fn(n, acc) => n * acc) 1 (unfold (fn n => if n < 1 then NONE else SOME(n, n-1)) x)
+
+val s = fact2 5
+
 

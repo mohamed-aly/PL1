@@ -79,4 +79,8 @@ fun fact2 x = List.foldl (fn(n, acc) => n * acc) 1 (unfold (fn n => if n < 1 the
 
 val s = fact2 5
 
+(* 11 *)
+fun map f xs = List.foldr (fn (x, acc) => (f x)::acc) [] xs
+
+val s = map (fn x => x * 10) [1,2,3]
 

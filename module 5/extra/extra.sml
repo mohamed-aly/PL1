@@ -84,3 +84,8 @@ fun map f xs = List.foldr (fn (x, acc) => (f x)::acc) [] xs
 
 val s = map (fn x => x * 10) [1,2,3]
 
+(* 12 *)
+fun filter f xs = List.foldr (fn (x, acc) => if f x then x::acc else acc) [] xs
+
+val s = filter (fn x=> x > 3) [1,2,3,4,5]
+
